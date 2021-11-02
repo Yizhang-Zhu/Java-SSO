@@ -1,0 +1,12 @@
+server:
+    port: 8080
+
+spring:
+    data:
+        mongodb:
+            authentication-database: admin
+            database: demo
+            host: 127.0.0.1
+            port: 27017
+    thymeleaf:
+        cache: false
