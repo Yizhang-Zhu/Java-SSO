@@ -9,19 +9,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TokenController {
     @Autowired 
-    private static TokenRepository tokenRepository;
+    private TokenRepository tokenRepository;
     @RequestMapping(value = "/token/add")
-    static public Token add(Token token)
+    public Token add(Token token)
     {
         return tokenRepository.insert(token);
     }
     @RequestMapping(value = "/token/findById")
-    static public Optional<Token> findById(String id)
+    public Optional<Token> findById(String id)
     {
         return tokenRepository.findById(id);
     }
     @RequestMapping(value = "/token/delete")
-    static public boolean delete(String id)
+    public boolean delete(String id)
     {
         tokenRepository.deleteById(id);
         if(tokenRepository.existsById(id)) return false;

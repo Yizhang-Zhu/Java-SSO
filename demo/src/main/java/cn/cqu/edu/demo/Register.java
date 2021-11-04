@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import cn.cqu.edu.demo.User.UserRepository;
 import cn.cqu.edu.demo.User.User;
+import cn.cqu.edu.demo.User.UserController;
 
 @Controller
 public class Register {
     @Autowired
-    private UserRepository  userRepository;
+    private UserRepository userRepository;
     
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     public String register(HttpServletRequest request, HttpSession session){

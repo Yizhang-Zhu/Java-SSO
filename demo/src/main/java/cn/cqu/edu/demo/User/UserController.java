@@ -10,24 +10,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
     @Autowired
-    private static UserRepository userRepository;
+    private UserRepository userRepository;
     @RequestMapping(value="/user/add")
-    static public User add(User user)
+    public User add(User user)
     {
         return userRepository.insert(user);
     }
     @RequestMapping(value="/user/findAll")
-    static public List<User> findAll()
+    public List<User> findAll()
     {
         return userRepository.findAll();
     }
     @RequestMapping(value="/user/findById")
-    static public Optional<User> findById(String userId)
+    public Optional<User> findById(String userId)
     {
         return userRepository.findById(userId);
     }
     @RequestMapping(value="/user/update")
-    static public User update(User user)
+    public User update(User user)
     {
         if(userRepository.existsById(user.getName()))
             return userRepository.save(user);
@@ -35,7 +35,7 @@ public class UserController {
             return null;
     }
     @RequestMapping(value="/user/delete")
-    static public boolean delete(String userId)
+    public boolean delete(String userId)
     {
         userRepository.deleteById(userId);
         if(userRepository.existsById(userId))
