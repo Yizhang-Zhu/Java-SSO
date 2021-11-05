@@ -12,7 +12,7 @@ public class ScheduleSendMessage {
     @Autowired
     private TokenRepository tokenRepository;
 
-    @Scheduled(cron = "*/30 * * * * ?")
+    @Scheduled(cron = "*/60 * * * * ?")
     public void deleteToken() {
         List<Token> token_list = tokenRepository.findAll();
         System.out.println("token清理");
