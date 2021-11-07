@@ -27,24 +27,30 @@ public class Login {
     @RequestMapping(value = "/back")
     public void getBack(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         back = request.getParameter("back");
-        request.getRequestDispatcher("/login").forward(request, response);
+        HttpSession session = request.getSession();
+        String id = session.getId();
+        System.out.println(id);
+        // request.getRequestDispatcher("/login").forward(request, response);
+        login(request, response);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String id = session.getId();
-        System.out.println(id);
         Optional<Token> token_Optional = tokenRepository.findById(id);
 
-        if (!token_Optional.isPresent()) {
-            request.getRequestDispatcher("/toPage/login").forward(request, response);
-        } else {
-            response.sendRedirect(back + "?msg=true");
-            return null;
-        }
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        if (username == null) {
+            if (!token_Optional.isPresent()) {
+                request.getRequestDispatcher("/toPage/login").forward(request, response);
+                return null;
+            } else {
+                response.sendRedirect(back + "?msg=true");
+                return null;
+            }
+        }
 
         Optional<User> user_Optional = userRepository.findById(username);
         if (!user_Optional.isPresent())
@@ -57,11 +63,11 @@ public class Login {
             token.setId(session.getId());
             token.setName("token_" + session.getId());
 
-            // 添加Cookie
-            response.setContentType("text/html;charset=utf-8");
-            Cookie cookie = new Cookie("JSESSIONID", session.getId());
-            cookie.setMaxAge(60 * 30);
-            response.addCookie(cookie);
+            // // 添加Cookie
+            // response.setContentType("text/html;charset=utf-8");
+            // Cookie cookie = new Cookie("JSESSIONID", session.getId());
+            // cookie.setMaxAge(60 * 30);
+            // response.addCookie(cookie);
 
             session.setAttribute("token", token);
             tokenRepository.insert(token);

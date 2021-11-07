@@ -15,7 +15,7 @@ public class ScheduleSendMessage {
     @Scheduled(cron = "*/30 * * * * ?")
     public void deleteToken() {
         List<Token> token_list = tokenRepository.findAll();
-        System.out.println(1);
+        System.out.println("token清理");
         // 判断当前时间是否大于数据库时间
         for (int i = 0; i < token_list.size(); i++) {
             if (token_list.get(i).getUpdateTime().getTime() < System.currentTimeMillis()) {
